@@ -1,0 +1,40 @@
+{
+  "type": "module",
+  "name": "cse341-blog",
+  "version": "1.0.0",
+  "description": "CSE 341 Project 2 - Blog REST API",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "dev": "node --watch --env-file=.env main.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix",
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
+    "swagger": "node ./swagger.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vicentemferrer/cse341-blog.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vicentemferrer/cse341-blog/issues"
+  },
+  "homepage": "https://github.com/vicentemferrer/cse341-blog#readme",
+  "author": "Vicente Ferrer",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.15.0",
+    "eslint": "^9.15.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "globals": "^15.12.0",
+    "prettier": "^3.3.3",
+    "swagger-autogen": "^2.23.7"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "express": "^4.21.1",
+    "mongoose": "^8.8.2",
+    "swagger-ui-express": "^5.0.1"
+  }
+}
