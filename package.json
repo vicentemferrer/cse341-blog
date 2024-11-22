@@ -36,5 +36,12 @@
     "express": "^4.21.1",
     "mongoose": "^8.8.2",
     "swagger-ui-express": "^5.0.1"
+  },
+  "imports": {
+    "#routes/*": "./src/routes/*",
+    "#controllers/*": "./src/controllers/*",
+    "#models/*": "./src/models/*",
+    "#db/*": "./src/db/*",
+    "#utils/*": "./src/utils/*"
   }
 }

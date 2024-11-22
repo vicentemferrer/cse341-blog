@@ -1,5 +1,6 @@
 # Node Modules folders
 node_modules
+samples
 
 # Development Environment files
 .env
