@@ -1,5 +1,5 @@
 import { body, param, validationResult } from 'express-validator';
-import { ValidationError, detailValidationErrors } from '#utils/error.util.js';
+import { ValidationError, detailValidationErrors } from './error.util.js';
 
 function createRules() {
   return [
@@ -101,7 +101,7 @@ function checkOnUpdate(req, res, next) {
     return res
       .status(400)
       .setHeader('Content-Type', 'application/json')
-      .json(new ValidationError(400, 'Error on user creation.', details));
+      .json(new ValidationError(400, 'Error on user modification.', details));
   }
 
   next();

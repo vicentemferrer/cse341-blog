@@ -1,4 +1,4 @@
-import User from '#db/user.schema.js';
+import User from '../db/user.schema.js';
 
 async function listUsers(options = {}) {
   try {

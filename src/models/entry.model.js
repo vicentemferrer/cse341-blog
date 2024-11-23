@@ -1,5 +1,5 @@
-import Entry from '#db/entry.schema.js';
-import User from '#db/user.schema.js';
+import Entry from '../db/entry.schema.js';
+import User from '../db/user.schema.js';
 
 async function listEntries(options = {}) {
   try {

@@ -1,9 +1,63 @@
-import { listUsers, readUser, createUser, updateUser, deleteUser } from '#models/user.model.js';
-import { listEntries } from '#models/entry.model.js';
-import { AppError } from '#utils/error.util.js';
+import { listUsers, readUser, createUser, updateUser, deleteUser } from '../models/user.model.js';
+import { listEntries } from '../models/entry.model.js';
+import { AppError } from '../utils/error.util.js';
 
 async function getUsers(req, res) {
-  // #swagger.tags = ['Users']
+  /**
+   * @swagger
+   *  /users:
+   *      get:
+   *        summary: Retrieve a list of users
+   *        description: Retrieve a list of users from the database.
+   *        responses:
+   *          200:
+   *            description: A list of users.
+   *            content:
+   *              application/json:
+   *                schema:
+   *                  type: array
+   *                  items:
+   *                    type: object
+   *                    properties:
+   *                      _id:
+   *                        type: string
+   *                      username:
+   *                        type: string
+   *                      firstName:
+   *                        type: string
+   *                      lastName:
+   *                        type: string
+   *                      email:
+   *                        type: string
+   *                      birthday:
+   *                        type: string
+   *                        format: date
+   *          404:
+   *            description: List of users not found
+   *            content:
+   *              application/json:
+   *                schema:
+   *                  type: object
+   *                  properties:
+   *                    status:
+   *                      type: integer
+   *                      example: 404
+   *                    message:
+   *                      type: string
+   *                      example: Users not found
+   *          500:
+   *            description: Internal server error
+   *            content:
+   *              application/json:
+   *                schema:
+   *                  type: object
+   *                  properties:
+   *                    status:
+   *                      type: integer
+   *                      example: 500
+   *                    message:
+   *                      type: string
+   */
   try {
     const result = await listUsers();
 
@@ -16,7 +70,72 @@ async function getUsers(req, res) {
 }
 
 async function addUser(req, res) {
-  // #swagger.tags = ['Users']
+  /**
+   * @swagger
+   *  /users:
+   *      post:
+   *        summary: Create a new user
+   *        description: Create a new user in the database.
+   *        parameters:
+   *          - in: body
+   *            name: body
+   *            required: true
+   *            schema:
+   *              type: object
+   *              properties:
+   *                username:
+   *                  type: string
+   *                firstName:
+   *                  type: string
+   *                lastName:
+   *                  type: string
+   *                email:
+   *                  type: string
+   *                birthday:
+   *                  type: string
+   *                  format: date
+   *        responses:
+   *          201:
+   *            description: User created.
+   *            content:
+   *              application/json:
+   *                schema:
+   *                  type: object
+   *                  properties:
+   *                    userID:
+   *                      type: string
+   *          422:
+   *            description: Error on validation
+   *            content:
+   *              application/json:
+   *                schema:
+   *                  type: object
+   *                  properties:
+   *                    status:
+   *                      type: integer
+   *                      example: 422
+   *                    message:
+   *                      type: string
+   *                      example: Error on user creation.
+   *                    details:
+   *                      type: object
+   *                      properties:
+   *                        [prop]:
+   *                          type: string
+   *                          example: [Error description]
+   *          500:
+   *            description: Internal server error
+   *            content:
+   *              application/json:
+   *                schema:
+   *                  type: object
+   *                  properties:
+   *                    status:
+   *                      type: integer
+   *                      example: 500
+   *                    message:
+   *                      type: string
+   */
   const { body } = req;
 
   try {
@@ -34,7 +153,90 @@ async function addUser(req, res) {
 }
 
 async function getUser(req, res) {
-  // #swagger.tags = ['Users']
+  /**
+   * @swagger
+   *  /users/{id}:
+   *      get:
+   *        summary: Retrieve an existing user
+   *        description: Retrieve a user from the database.
+   *        parameters:
+   *          - in: path
+   *            name: id
+   *            required: true
+   *            schema:
+   *              type: string
+   *        responses:
+   *          200:
+   *            description: An existing user.
+   *            content:
+   *              application/json:
+   *                schema:
+   *                  type: object
+   *                  properties:
+   *                    _id:
+   *                      type: string
+   *                    username:
+   *                      type: string
+   *                    firstName:
+   *                      type: string
+   *                    lastName:
+   *                      type: string
+   *                    email:
+   *                      type: string
+   *                    birthday:
+   *                      type: string
+   *                      format: date
+   *                    entries:
+   *                      type: array
+   *                      items:
+   *                        type: string
+   *                        description: Written Entry ID
+   *          400:
+   *            description: Error on validation
+   *            content:
+   *              application/json:
+   *                schema:
+   *                  type: object
+   *                  properties:
+   *                    status:
+   *                      type: integer
+   *                      example: 400
+   *                    message:
+   *                      type: string
+   *                      example: Error on find ID.
+   *                    details:
+   *                      type: object
+   *                      properties:
+   *                        id:
+   *                          type: string
+   *                          example: Invalid ID.
+   *          404:
+   *            description: User not found
+   *            content:
+   *              application/json:
+   *                schema:
+   *                  type: object
+   *                  properties:
+   *                    status:
+   *                      type: integer
+   *                      example: 404
+   *                    message:
+   *                      type: string
+   *                      example: User not found
+   *          500:
+   *            description: Internal server error
+   *            content:
+   *              application/json:
+   *                schema:
+   *                  type: object
+   *                  properties:
+   *                    status:
+   *                      type: integer
+   *                      example: 500
+   *                    message:
+   *                      type: string
+   */
+
   const { id } = req.params;
 
   try {
@@ -54,7 +256,70 @@ async function getUser(req, res) {
 }
 
 async function modifyUser(req, res) {
-  // #swagger.tags = ['Users']
+  /**
+   * @swagger
+   *  /users/{id}:
+   *      put:
+   *        summary: Update an existing user
+   *        description: Update an existing user in the database.
+   *        parameters:
+   *          - in: path
+   *            name: id
+   *            required: true
+   *            schema:
+   *              type: string
+   *          - in: body
+   *            name: body
+   *            required: true
+   *            schema:
+   *              type: object
+   *              properties:
+   *                username:
+   *                  type: string
+   *                firstName:
+   *                  type: string
+   *                lastName:
+   *                  type: string
+   *                email:
+   *                  type: string
+   *                birthday:
+   *                  type: string
+   *                  format: date
+   *        responses:
+   *          204:
+   *            description: User updated successfully. No content in response.
+   *          400:
+   *            description: Error on validation
+   *            content:
+   *              application/json:
+   *                schema:
+   *                  type: object
+   *                  properties:
+   *                    status:
+   *                      type: integer
+   *                      example: 400
+   *                    message:
+   *                      type: string
+   *                      example: Error on user modification.
+   *                    details:
+   *                      type: object
+   *                      properties:
+   *                        [prop]:
+   *                          type: string
+   *                          example: [Error description]
+   *          500:
+   *            description: Internal server error
+   *            content:
+   *              application/json:
+   *                schema:
+   *                  type: object
+   *                  properties:
+   *                    status:
+   *                      type: integer
+   *                      example: 500
+   *                    message:
+   *                      type: string
+   */
   const {
     body,
     params: { id }
@@ -72,7 +337,53 @@ async function modifyUser(req, res) {
 }
 
 async function eraseUser(req, res) {
-  // #swagger.tags = ['Users']
+  /**
+   * @swagger
+   *  /users/{id}:
+   *      delete:
+   *        summary: Delete an existing user
+   *        description: Delete a user from the database.
+   *        parameters:
+   *          - in: path
+   *            name: id
+   *            required: true
+   *            schema:
+   *              type: string
+   *        responses:
+   *          204:
+   *            description: User deleted successfully. No content in response.
+   *          400:
+   *            description: Error on validation
+   *            content:
+   *              application/json:
+   *                schema:
+   *                  type: object
+   *                  properties:
+   *                    status:
+   *                      type: integer
+   *                      example: 400
+   *                    message:
+   *                      type: string
+   *                      example: Error on find ID.
+   *                    details:
+   *                      type: object
+   *                      properties:
+   *                        id:
+   *                          type: string
+   *                          example: Invalid ID.
+   *          500:
+   *            description: Internal server error
+   *            content:
+   *              application/json:
+   *                schema:
+   *                  type: object
+   *                  properties:
+   *                    status:
+   *                      type: integer
+   *                      example: 500
+   *                    message:
+   *                      type: string
+   */
   const { id } = req.params;
 
   try {

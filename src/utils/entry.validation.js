@@ -1,11 +1,24 @@
 import { body, param, validationResult } from 'express-validator';
-import { ValidationError, detailValidationErrors } from '#utils/error.util.js';
-import { checkExistingId } from '#models/entry.model.js';
+import { ValidationError, detailValidationErrors } from './error.util.js';
+import { checkExistingId } from '../models/entry.model.js';
 
 function createRules() {
   return [
     body('title').trim().escape().notEmpty().isLength({ min: 5 }).withMessage('Invalid title.'),
     body('content').trim().escape().notEmpty().isLength({ min: 5 }).withMessage('Invalid content.'),
+    body('comments')
+      .optional()
+      .isArray()
+      .withMessage('Must be an array')
+      .custom((array) => array.every((item) => typeof item === 'string'))
+      .withMessage('All elements must be strings'),
+    body('likes')
+      .optional()
+      .trim()
+      .escape()
+      .notEmpty()
+      .isInt({ min: 0 })
+      .withMessage('Invalid likes quantity.'),
     body('userID')
       .isLength({ min: 24, max: 24 })
       .matches(/^[a-fA-F0-9]+$/)
@@ -42,7 +55,6 @@ function updateRules() {
       .matches(/^[a-fA-F0-9]+$/)
       .isMongoId()
       .withMessage('Invalid ID.'),
-
     body('title')
       .optional()
       .trim()
@@ -57,6 +69,19 @@ function updateRules() {
       .notEmpty()
       .isLength({ min: 5 })
       .withMessage('Invalid content.'),
+    body('comments')
+      .optional()
+      .isArray()
+      .withMessage('Must be an array')
+      .custom((array) => array.every((item) => typeof item === 'string'))
+      .withMessage('All elements must be strings'),
+    body('likes')
+      .optional()
+      .trim()
+      .escape()
+      .notEmpty()
+      .isInt({ min: 0 })
+      .withMessage('Invalid likes quantity.'),
     body('userID')
       .optional()
       .isLength({ min: 24, max: 24 })
