@@ -1,0 +1,58 @@
+###
+GET http://localhost:3000/users/
+
+###
+POST http://localhost:3000/users/
+Content-Type: application/json
+
+{
+  "username": "janeri",
+  "firstName": "Jane",
+  "lastName": "Rider",
+  "email": "janerider@gmail.com",
+  "birthday": "1997-05-10"
+}
+
+###
+GET http://localhost:3000/users/<user_id>
+
+###
+PUT http://localhost:3000/users/<user_id>
+Content-Type: application/json
+
+{
+  "username": "janeri",
+  "firstName": "Judith"
+}
+
+###
+DELETE http://localhost:3000/users/<user_id>
+
+##################################################################
+
+###
+GET http://localhost:3000/entries/
+
+###
+POST http://localhost:3000/entries/
+Content-Type: application/json
+
+{
+  "title": "Title of Entry",
+  "content": "Let us see how this work",
+  "userID": "6740bb264912a387f6bec347"
+}
+
+###
+GET http://localhost:3000/entries/<entry_id>
+
+###
+PUT http://localhost:3000/entries/<entry_id>
+Content-Type: application/json
+
+{
+  "title": "Updating Title"
+}
+
+###
+DELETE http://localhost:3000/entries/<entry_id>

@@ -2,10 +2,13 @@ import express from 'express';
 import bodyParser from 'body-parser';
 
 import router from '#routes/index.js';
+import { connect } from 'mongoose';
 
-const { PORT } = process.env;
+const { PORT, MONGODB_URI } = process.env;
 
 const app = express();
+
+connect(MONGODB_URI);
 
 // Set vars
 app.set('port', PORT || 4321);
