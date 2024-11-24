@@ -1,5 +1,5 @@
 import { body, param, validationResult } from 'express-validator';
-import { ValidationError, detailValidationErrors } from './error.util.js';
+import { ValidationError, detailValidationErrors } from '#utils/error.util.js';
 
 function createRules() {
   return [

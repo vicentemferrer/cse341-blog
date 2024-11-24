@@ -7,89 +7,743 @@
   },
   "host": "localhost:3000",
   "basePath": "/",
-  "schemes": [
-    "http"
-  ],
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
   "paths": {
-    "/": {
+    "/users": {
       "get": {
-        "description": "",
+        "tags": ["Users"],
+        "summary": "Retrieve a list of users",
+        "description": "Retrieve a list of users from the database.",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "A list of users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string"
+                      },
+                      "username": {
+                        "type": "string"
+                      },
+                      "firstName": {
+                        "type": "string"
+                      },
+                      "lastName": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "birthday": {
+                        "type": "string",
+                        "format": "date"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "List of users not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Users not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 500
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
       "post": {
-        "description": "",
+        "tags": ["Users"],
+        "summary": "Create a new user",
+        "description": "Create a new user in the database.",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "birthday": {
+                  "type": "string",
+                  "format": "date"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "User created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "userID": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
           },
           "422": {
-            "description": "Unprocessable Entity"
+            "description": "Error on validation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 422
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Error on user creation."
+                    },
+                    "details": {
+                      "type": "object",
+                      "properties": {
+                        "[prop]": {
+                          "type": "string",
+                          "example": "[Error description]"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 500
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
     },
-    "/{id}": {
+    "/users/{id}": {
       "get": {
-        "description": "",
+        "tags": ["Users"],
+        "summary": "Retrieve an existing user",
+        "description": "Retrieve a user from the database.",
         "parameters": [
           {
-            "name": "id",
             "in": "path",
+            "name": "id",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "An existing user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "firstName": {
+                      "type": "string"
+                    },
+                    "lastName": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "birthday": {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    "entries": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "description": "Written Entry ID"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Error on validation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Error on find ID."
+                    },
+                    "details": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "Invalid ID."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "User not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 500
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
       "put": {
-        "description": "",
+        "tags": ["Users"],
+        "summary": "Update an existing user",
+        "description": "Update an existing user in the database.",
         "parameters": [
+          { "in": "path", "name": "id", "required": true, "schema": { "type": "string" } },
           {
-            "name": "id",
-            "in": "path",
+            "in": "body",
+            "name": "body",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": { "type": "string" },
+                "firstName": { "type": "string" },
+                "lastName": { "type": "string" },
+                "email": { "type": "string" },
+                "birthday": { "type": "string", "format": "date" }
+              }
+            }
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
+          "204": { "description": "User updated successfully. No content in response." },
           "400": {
-            "description": "Bad Request"
+            "description": "Error on validation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "integer", "example": 400 },
+                    "message": { "type": "string", "example": "Error on user modification." },
+                    "details": {
+                      "type": "object",
+                      "properties": {
+                        "[prop]": { "type": "string", "example": "[Error description]" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "integer", "example": 500 },
+                    "message": { "type": "string" }
+                  }
+                }
+              }
+            }
           }
         }
       },
       "delete": {
-        "description": "",
+        "tags": ["Users"],
+        "summary": "Delete an existing user",
+        "description": "Delete a user from the database.",
+        "parameters": [
+          { "in": "path", "name": "id", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "204": { "description": "User deleted successfully. No content in response." },
+          "400": {
+            "description": "Error on validation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "integer", "example": 400 },
+                    "message": { "type": "string", "example": "Error on find ID." },
+                    "details": {
+                      "type": "object",
+                      "properties": { "id": { "type": "string", "example": "Invalid ID." } }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "integer", "example": 500 },
+                    "message": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/entries": {
+      "get": {
+        "tags": ["Entries"],
+        "summary": "Retrieve a list of entries",
+        "description": "Retrieve a list of entries from the database.",
+        "responses": {
+          "200": {
+            "description": "A list of entries.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": { "type": "string" },
+                      "title": { "type": "string" },
+                      "content": { "type": "string" },
+                      "comments": { "type": "integer" },
+                      "likes": { "type": "integer" },
+                      "userID": { "type": "string" },
+                      "created_at": { "type": "string", "format": "date" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "List of entries not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "integer", "example": 404 },
+                    "message": { "type": "string", "example": "Entries not found" }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "integer", "example": 500 },
+                    "message": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Entries"],
+        "summary": "Create a new entry",
+        "description": "Create a new entry in the database.",
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
+            "in": "body",
+            "name": "body",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": { "type": "string" },
+                "content": { "type": "string" },
+                "comments": { "type": "array", "items": { "type": "string" } },
+                "likes": { "type": "integer" },
+                "userID": { "type": "string" },
+                "created_at": { "type": "string", "format": "date" }
+              },
+              "required": ["title", "content", "userID"]
+            }
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
+          "201": {
+            "description": "Entry created.",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object", "properties": { "entryID": { "type": "string" } } }
+              }
+            }
+          },
+          "422": {
+            "description": "Error on validation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "integer", "example": 422 },
+                    "message": { "type": "string", "example": "Error on entry creation." },
+                    "details": {
+                      "type": "object",
+                      "properties": {
+                        "[prop]": { "type": "string", "example": "[Error description]" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "integer", "example": 500 },
+                    "message": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/entries/{id}": {
+      "get": {
+        "tags": ["Entries"],
+        "summary": "Retrieve an existing entry",
+        "description": "Retrieve an entry from the database.",
+        "parameters": [
+          { "in": "path", "name": "id", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "An existing entry.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_id": { "type": "string" },
+                    "title": { "type": "string" },
+                    "content": { "type": "string" },
+                    "comments": { "type": "array", "items": { "type": "string" } },
+                    "likes": { "type": "integer" },
+                    "created_at": { "type": "string", "format": "date" },
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "_id": { "type": "string" },
+                        "username": { "type": "string" },
+                        "firstName": { "type": "string" },
+                        "lastName": { "type": "string" },
+                        "email": { "type": "string" },
+                        "birthday": { "type": "string", "format": "date" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Error on validation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "integer", "example": 400 },
+                    "message": { "type": "string", "example": "Error on find ID." },
+                    "details": {
+                      "type": "object",
+                      "properties": { "id": { "type": "string", "example": "Invalid ID." } }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Entry not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "integer", "example": 404 },
+                    "message": { "type": "string", "example": "Entry not found" }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "integer", "example": 500 },
+                    "message": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Entries"],
+        "summary": "Update an existing entry",
+        "description": "Update an existing entry in the database.",
+        "parameters": [
+          { "in": "path", "name": "id", "required": true, "schema": { "type": "string" } },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": { "type": "string" },
+                "content": { "type": "string" },
+                "comments": { "type": "array", "items": { "type": "string" } },
+                "likes": { "type": "integer" },
+                "userID": { "type": "string" }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": { "description": "Entry updated successfully. No content in response." },
+          "400": {
+            "description": "Error on validation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "integer", "example": 400 },
+                    "message": { "type": "string", "example": "Error on entry creation." },
+                    "details": {
+                      "type": "object",
+                      "properties": {
+                        "[prop]": { "type": "string", "example": "[Error description]" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "integer", "example": 500 },
+                    "message": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Entries"],
+        "summary": "Delete an existing entry",
+        "description": "Delete an entry from the database.",
+        "parameters": [
+          { "in": "path", "name": "id", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "204": { "description": "Entry deleted successfully. No content in response." },
+          "400": {
+            "description": "Error on validation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "integer", "example": 400 },
+                    "message": { "type": "string", "example": "Error on find ID." },
+                    "details": {
+                      "type": "object",
+                      "properties": { "id": { "type": "string", "example": "Invalid ID." } }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "integer", "example": 500 },
+                    "message": { "type": "string" }
+                  }
+                }
+              }
+            }
           }
         }
       }
     }
-  }
+  },
+  "definitions": {},
+  "responses": {},
+  "parameters": {},
+  "securityDefinitions": {},
+  "tags": [
+    { "name": "Users", "description": "Endpoint for blog users" },
+    { "name": "Entries", "description": "Endpoint for entries made by a valid user" }
+  ],
+  "externalDocs": {}
 }

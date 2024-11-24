@@ -1,6 +1,6 @@
-import { listUsers, readUser, createUser, updateUser, deleteUser } from '../models/user.model.js';
-import { listEntries } from '../models/entry.model.js';
-import { AppError } from '../utils/error.util.js';
+import { listUsers, readUser, createUser, updateUser, deleteUser } from '#models/user.model.js';
+import { listEntries } from '#models/entry.model.js';
+import { AppError } from '#utils/error.util.js';
 
 async function getUsers(req, res) {
   /**

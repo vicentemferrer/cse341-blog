@@ -1,4 +1,4 @@
-import User from '../db/user.schema.js';
+import User from '#db/user.schema.js';
 
 async function listUsers(options = {}) {
   try {
@@ -52,4 +52,9 @@ async function deleteUser(id) {
   }
 }
 
-export { listUsers, createUser, readUser, updateUser, deleteUser };
+async function checkExistingId(id) {
+  const user = await User.findById(id);
+  return user !== null;
+}
+
+export { listUsers, createUser, readUser, updateUser, deleteUser, checkExistingId };

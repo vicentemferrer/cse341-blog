@@ -6,17 +6,11 @@ import {
   addUser,
   modifyUser,
   eraseUser
-} from '../controllers/users.controller.js';
+} from '#controllers/users.controller.js';
 
-import {
-  createRules,
-  checkOnCreate,
-  updateRules,
-  checkOnUpdate
-} from '../utils/user.validation.js';
-import { idRules, checkOnId } from '../utils/id.validation.js';
-
-// import { handleErrors } from '#utils/error.util.js';
+import { createRules, checkOnCreate, updateRules, checkOnUpdate } from '#utils/user.validation.js';
+import { idRules, checkOnId } from '#utils/id.validation.js';
+import { handleErrors } from '#utils/error.util.js';
 
 const router = new Router();
 
@@ -27,11 +21,11 @@ const router = new Router();
  *    description: Endpoint for users in the system
  */
 
-router.get('/', getUsers);
-router.post('/', createRules(), checkOnCreate, addUser);
+router.get('/', handleErrors(getUsers));
+router.post('/', createRules(), checkOnCreate, handleErrors(addUser));
 
-router.get('/:id', idRules(), checkOnId, getUser);
-router.put('/:id', updateRules(), checkOnUpdate, modifyUser);
-router.delete('/:id', idRules(), checkOnId, eraseUser);
+router.get('/:id', idRules(), checkOnId, handleErrors(getUser));
+router.put('/:id', updateRules(), checkOnUpdate, handleErrors(modifyUser));
+router.delete('/:id', idRules(), checkOnId, handleErrors(eraseUser));
 
 export default router;

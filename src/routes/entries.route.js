@@ -6,17 +6,11 @@ import {
   addEntry,
   modifyEntry,
   eraseEntry
-} from '../controllers/entries.controller.js';
+} from '#controllers/entries.controller.js';
 
-import {
-  createRules,
-  checkOnCreate,
-  updateRules,
-  checkOnUpdate
-} from '../utils/entry.validation.js';
-import { idRules, checkOnId } from '../utils/id.validation.js';
-
-//import { handleErrors } from '#utils/error.util.js';
+import { createRules, checkOnCreate, updateRules, checkOnUpdate } from '#utils/entry.validation.js';
+import { idRules, checkOnId } from '#utils/id.validation.js';
+import { handleErrors } from '#utils/error.util.js';
 
 const router = new Router();
 
@@ -27,11 +21,11 @@ const router = new Router();
  *    description: Endpoint for entries in the system
  */
 
-router.get('/', getEntries);
-router.post('/', createRules(), checkOnCreate, addEntry);
+router.get('/', handleErrors(getEntries));
+router.post('/', createRules(), checkOnCreate, handleErrors(addEntry));
 
-router.get('/:id', idRules(), checkOnId, getEntry);
-router.put('/:id', updateRules(), checkOnUpdate, modifyEntry);
-router.delete('/:id', idRules(), checkOnId, eraseEntry);
+router.get('/:id', idRules(), checkOnId, handleErrors(getEntry));
+router.put('/:id', updateRules(), checkOnUpdate, handleErrors(modifyEntry));
+router.delete('/:id', idRules(), checkOnId, handleErrors(eraseEntry));
 
 export default router;

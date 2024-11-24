@@ -4,9 +4,9 @@ import {
   readEntry,
   updateEntry,
   deleteEntry
-} from '../models/entry.model.js';
-import { readUser } from '../models/user.model.js';
-import { AppError } from '../utils/error.util.js';
+} from '#models/entry.model.js';
+import { readUser } from '#models/user.model.js';
+import { AppError } from '#utils/error.util.js';
 
 async function getEntries(req, res) {
   /**
@@ -162,7 +162,6 @@ async function addEntry(req, res) {
    *                    message:
    *                      type: string
    */
-
   const { body } = req;
 
   try {
@@ -276,7 +275,6 @@ async function getEntry(req, res) {
    *                    message:
    *                      type: string
    */
-
   const { id } = req.params;
 
   try {

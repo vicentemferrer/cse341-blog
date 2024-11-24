@@ -1,6 +1,6 @@
 import { body, param, validationResult } from 'express-validator';
-import { ValidationError, detailValidationErrors } from './error.util.js';
-import { checkExistingId } from '../models/entry.model.js';
+import { ValidationError, detailValidationErrors } from '#utils/error.util.js';
+import { checkExistingId } from '#models/user.model.js';
 
 function createRules() {
   return [
