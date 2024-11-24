@@ -5,7 +5,7 @@
     "description": "CSE 341 Project 2 - Express, Mongoose, Express-Validator",
     "version": "1.0.0"
   },
-  "host": "cse341-blog-vgak.onrender.com/",
+  "host": "cse341-blog-vgak.onrender.com",
   "basePath": "/",
   "schemes": ["https"],
   "consumes": ["application/json"],
