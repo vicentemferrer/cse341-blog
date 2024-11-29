@@ -5,9 +5,9 @@
     "description": "CSE 341 Project 2 - Express, Mongoose, Express-Validator",
     "version": "1.0.0"
   },
-  "host": "cse341-blog-vgak.onrender.com",
+  "host": "localhost:3000",
   "basePath": "/",
-  "schemes": ["https"],
+  "schemes": ["http"],
   "consumes": ["application/json"],
   "produces": ["application/json"],
   "paths": {
@@ -19,33 +19,29 @@
         "responses": {
           "200": {
             "description": "A list of users.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "_id": {
-                        "type": "string"
-                      },
-                      "username": {
-                        "type": "string"
-                      },
-                      "firstName": {
-                        "type": "string"
-                      },
-                      "lastName": {
-                        "type": "string"
-                      },
-                      "email": {
-                        "type": "string"
-                      },
-                      "birthday": {
-                        "type": "string",
-                        "format": "date"
-                      }
-                    }
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string"
+                  },
+                  "username": {
+                    "type": "string"
+                  },
+                  "firstName": {
+                    "type": "string"
+                  },
+                  "lastName": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "birthday": {
+                    "type": "string",
+                    "format": "date"
                   }
                 }
               }
@@ -53,39 +49,31 @@
           },
           "404": {
             "description": "List of users not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 404
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Users not found"
-                    }
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Users not found"
                 }
               }
             }
           },
           "500": {
             "description": "Internal server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 500
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string"
                 }
               }
             }
@@ -127,42 +115,41 @@
         "responses": {
           "201": {
             "description": "User created.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "userID": {
-                      "type": "string"
-                    }
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userID": {
+                  "type": "string"
                 }
               }
             }
           },
+          "401": {
+            "description": "Forbidden Access",
+            "schema": {
+              "type": "string",
+              "example": "Forbidden Access"
+            }
+          },
           "422": {
             "description": "Error on validation",
-            "content": {
-              "application/json": {
-                "schema": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 422
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error on user creation."
+                },
+                "details": {
                   "type": "object",
                   "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 422
-                    },
-                    "message": {
+                    "[prop]": {
                       "type": "string",
-                      "example": "Error on user creation."
-                    },
-                    "details": {
-                      "type": "object",
-                      "properties": {
-                        "[prop]": {
-                          "type": "string",
-                          "example": "[Error description]"
-                        }
-                      }
+                      "example": "[Error description]"
                     }
                   }
                 }
@@ -171,19 +158,15 @@
           },
           "500": {
             "description": "Internal server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 500
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string"
                 }
               }
             }
@@ -209,37 +192,33 @@
         "responses": {
           "200": {
             "description": "An existing user.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "_id": {
-                      "type": "string"
-                    },
-                    "username": {
-                      "type": "string"
-                    },
-                    "firstName": {
-                      "type": "string"
-                    },
-                    "lastName": {
-                      "type": "string"
-                    },
-                    "email": {
-                      "type": "string"
-                    },
-                    "birthday": {
-                      "type": "string",
-                      "format": "date"
-                    },
-                    "entries": {
-                      "type": "array",
-                      "items": {
-                        "type": "string",
-                        "description": "Written Entry ID"
-                      }
-                    }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "birthday": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "entries": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "Written Entry ID"
                   }
                 }
               }
@@ -247,27 +226,23 @@
           },
           "400": {
             "description": "Error on validation",
-            "content": {
-              "application/json": {
-                "schema": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error on find ID."
+                },
+                "details": {
                   "type": "object",
                   "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 400
-                    },
-                    "message": {
+                    "id": {
                       "type": "string",
-                      "example": "Error on find ID."
-                    },
-                    "details": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "string",
-                          "example": "Invalid ID."
-                        }
-                      }
+                      "example": "Invalid ID."
                     }
                   }
                 }
@@ -276,39 +251,31 @@
           },
           "404": {
             "description": "User not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 404
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "User not found"
-                    }
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "User not found"
                 }
               }
             }
           },
           "500": {
             "description": "Internal server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 500
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string"
                 }
               }
             }
@@ -341,34 +308,47 @@
           "204": { "description": "User updated successfully. No content in response." },
           "400": {
             "description": "Error on validation",
-            "content": {
-              "application/json": {
-                "schema": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error on user modification."
+                },
+                "details": {
                   "type": "object",
                   "properties": {
-                    "status": { "type": "integer", "example": 400 },
-                    "message": { "type": "string", "example": "Error on user modification." },
-                    "details": {
-                      "type": "object",
-                      "properties": {
-                        "[prop]": { "type": "string", "example": "[Error description]" }
-                      }
+                    "[prop]": {
+                      "type": "string",
+                      "example": "[Error description]"
                     }
                   }
                 }
               }
             }
           },
+          "401": {
+            "description": "Forbidden Access",
+            "schema": {
+              "type": "string",
+              "example": "Forbidden Access"
+            }
+          },
           "500": {
             "description": "Internal server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": { "type": "integer", "example": 500 },
-                    "message": { "type": "string" }
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string"
                 }
               }
             }
@@ -386,32 +366,47 @@
           "204": { "description": "User deleted successfully. No content in response." },
           "400": {
             "description": "Error on validation",
-            "content": {
-              "application/json": {
-                "schema": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error on find ID."
+                },
+                "details": {
                   "type": "object",
                   "properties": {
-                    "status": { "type": "integer", "example": 400 },
-                    "message": { "type": "string", "example": "Error on find ID." },
-                    "details": {
-                      "type": "object",
-                      "properties": { "id": { "type": "string", "example": "Invalid ID." } }
+                    "id": {
+                      "type": "string",
+                      "example": "Invalid ID."
                     }
                   }
                 }
               }
             }
           },
+          "401": {
+            "description": "Forbidden Access",
+            "schema": {
+              "type": "string",
+              "example": "Forbidden Access"
+            }
+          },
           "500": {
             "description": "Internal server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": { "type": "integer", "example": 500 },
-                    "message": { "type": "string" }
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string"
                 }
               }
             }
@@ -427,21 +422,32 @@
         "responses": {
           "200": {
             "description": "A list of entries.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "_id": { "type": "string" },
-                      "title": { "type": "string" },
-                      "content": { "type": "string" },
-                      "comments": { "type": "integer" },
-                      "likes": { "type": "integer" },
-                      "userID": { "type": "string" },
-                      "created_at": { "type": "string", "format": "date" }
-                    }
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "content": {
+                    "type": "string"
+                  },
+                  "comments": {
+                    "type": "integer"
+                  },
+                  "likes": {
+                    "type": "integer"
+                  },
+                  "userID": {
+                    "type": "string"
+                  },
+                  "created_at": {
+                    "type": "string",
+                    "format": "date"
                   }
                 }
               }
@@ -449,28 +455,31 @@
           },
           "404": {
             "description": "List of entries not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": { "type": "integer", "example": 404 },
-                    "message": { "type": "string", "example": "Entries not found" }
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Entries not found"
                 }
               }
             }
           },
           "500": {
             "description": "Internal server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": { "type": "integer", "example": 500 },
-                    "message": { "type": "string" }
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string"
                 }
               }
             }
@@ -503,26 +512,34 @@
         "responses": {
           "201": {
             "description": "Entry created.",
-            "content": {
-              "application/json": {
-                "schema": { "type": "object", "properties": { "entryID": { "type": "string" } } }
-              }
+            "schema": { "type": "object", "properties": { "entryID": { "type": "string" } } }
+          },
+          "401": {
+            "description": "Forbidden Access",
+            "schema": {
+              "type": "string",
+              "example": "Forbidden Access"
             }
           },
           "422": {
             "description": "Error on validation",
-            "content": {
-              "application/json": {
-                "schema": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 422
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error on entry creation."
+                },
+                "details": {
                   "type": "object",
                   "properties": {
-                    "status": { "type": "integer", "example": 422 },
-                    "message": { "type": "string", "example": "Error on entry creation." },
-                    "details": {
-                      "type": "object",
-                      "properties": {
-                        "[prop]": { "type": "string", "example": "[Error description]" }
-                      }
+                    "[prop]": {
+                      "type": "string",
+                      "example": "[Error description]"
                     }
                   }
                 }
@@ -531,14 +548,15 @@
           },
           "500": {
             "description": "Internal server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": { "type": "integer", "example": 500 },
-                    "message": { "type": "string" }
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string"
                 }
               }
             }
@@ -557,27 +575,52 @@
         "responses": {
           "200": {
             "description": "An existing entry.",
-            "content": {
-              "application/json": {
-                "schema": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "content": {
+                  "type": "string"
+                },
+                "comments": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "likes": {
+                  "type": "integer"
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "user": {
                   "type": "object",
                   "properties": {
-                    "_id": { "type": "string" },
-                    "title": { "type": "string" },
-                    "content": { "type": "string" },
-                    "comments": { "type": "array", "items": { "type": "string" } },
-                    "likes": { "type": "integer" },
-                    "created_at": { "type": "string", "format": "date" },
-                    "user": {
-                      "type": "object",
-                      "properties": {
-                        "_id": { "type": "string" },
-                        "username": { "type": "string" },
-                        "firstName": { "type": "string" },
-                        "lastName": { "type": "string" },
-                        "email": { "type": "string" },
-                        "birthday": { "type": "string", "format": "date" }
-                      }
+                    "_id": {
+                      "type": "string"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "firstName": {
+                      "type": "string"
+                    },
+                    "lastName": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "birthday": {
+                      "type": "string",
+                      "format": "date"
                     }
                   }
                 }
@@ -586,16 +629,23 @@
           },
           "400": {
             "description": "Error on validation",
-            "content": {
-              "application/json": {
-                "schema": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error on find ID."
+                },
+                "details": {
                   "type": "object",
                   "properties": {
-                    "status": { "type": "integer", "example": 400 },
-                    "message": { "type": "string", "example": "Error on find ID." },
-                    "details": {
-                      "type": "object",
-                      "properties": { "id": { "type": "string", "example": "Invalid ID." } }
+                    "id": {
+                      "type": "string",
+                      "example": "Invalid ID."
                     }
                   }
                 }
@@ -604,28 +654,31 @@
           },
           "404": {
             "description": "Entry not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": { "type": "integer", "example": 404 },
-                    "message": { "type": "string", "example": "Entry not found" }
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Entry not found"
                 }
               }
             }
           },
           "500": {
             "description": "Internal server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": { "type": "integer", "example": 500 },
-                    "message": { "type": "string" }
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string"
                 }
               }
             }
@@ -658,34 +711,47 @@
           "204": { "description": "Entry updated successfully. No content in response." },
           "400": {
             "description": "Error on validation",
-            "content": {
-              "application/json": {
-                "schema": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error on entry creation."
+                },
+                "details": {
                   "type": "object",
                   "properties": {
-                    "status": { "type": "integer", "example": 400 },
-                    "message": { "type": "string", "example": "Error on entry creation." },
-                    "details": {
-                      "type": "object",
-                      "properties": {
-                        "[prop]": { "type": "string", "example": "[Error description]" }
-                      }
+                    "[prop]": {
+                      "type": "string",
+                      "example": "[Error description]"
                     }
                   }
                 }
               }
             }
           },
+          "401": {
+            "description": "Forbidden Access",
+            "schema": {
+              "type": "string",
+              "example": "Forbidden Access"
+            }
+          },
           "500": {
             "description": "Internal server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": { "type": "integer", "example": 500 },
-                    "message": { "type": "string" }
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string"
                 }
               }
             }
@@ -703,32 +769,47 @@
           "204": { "description": "Entry deleted successfully. No content in response." },
           "400": {
             "description": "Error on validation",
-            "content": {
-              "application/json": {
-                "schema": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error on find ID."
+                },
+                "details": {
                   "type": "object",
                   "properties": {
-                    "status": { "type": "integer", "example": 400 },
-                    "message": { "type": "string", "example": "Error on find ID." },
-                    "details": {
-                      "type": "object",
-                      "properties": { "id": { "type": "string", "example": "Invalid ID." } }
+                    "id": {
+                      "type": "string",
+                      "example": "Invalid ID."
                     }
                   }
                 }
               }
             }
           },
+          "401": {
+            "description": "Forbidden Access",
+            "schema": {
+              "type": "string",
+              "example": "Forbidden Access"
+            }
+          },
           "500": {
             "description": "Internal server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": { "type": "integer", "example": 500 },
-                    "message": { "type": "string" }
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string"
                 }
               }
             }

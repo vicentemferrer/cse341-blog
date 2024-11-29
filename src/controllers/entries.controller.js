@@ -289,7 +289,10 @@ async function getEntry(req, res) {
     return res
       .status(200)
       .setHeader('Content-Type', 'application/json')
-      .json({ ...result['_doc'], user: user['_doc'] });
+      .json({
+        ...result['_doc'],
+        user: { userID: user['_doc']._id, username: user['_doc'].username }
+      });
   } catch (err) {
     throw new AppError(err.status || 500, err.message);
   }

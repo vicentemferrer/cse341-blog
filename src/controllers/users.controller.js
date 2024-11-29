@@ -249,7 +249,13 @@ async function getUser(req, res) {
     return res
       .status(200)
       .setHeader('Content-Type', 'application/json')
-      .json({ ...result['_doc'], entries: entries.map((doc) => doc['_id']) });
+      .json({
+        ...result['_doc'],
+        entries: entries.map((doc) => ({
+          entryID: doc['_id'],
+          title: doc['title']
+        }))
+      });
   } catch (err) {
     throw new AppError(err.status || 500, err.message);
   }

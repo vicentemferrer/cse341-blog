@@ -11,6 +11,7 @@ import {
 import { createRules, checkOnCreate, updateRules, checkOnUpdate } from '#utils/entry.validation.js';
 import { idRules, checkOnId } from '#utils/id.validation.js';
 import { handleErrors } from '#utils/error.util.js';
+import { isAuthenticated } from '#utils/passport.util.js';
 
 const router = new Router();
 
@@ -22,10 +23,10 @@ const router = new Router();
  */
 
 router.get('/', handleErrors(getEntries));
-router.post('/', createRules(), checkOnCreate, handleErrors(addEntry));
+router.post('/', createRules(), checkOnCreate, isAuthenticated, handleErrors(addEntry));
 
 router.get('/:id', idRules(), checkOnId, handleErrors(getEntry));
-router.put('/:id', updateRules(), checkOnUpdate, handleErrors(modifyEntry));
-router.delete('/:id', idRules(), checkOnId, handleErrors(eraseEntry));
+router.put('/:id', updateRules(), checkOnUpdate, isAuthenticated, handleErrors(modifyEntry));
+router.delete('/:id', idRules(), checkOnId, isAuthenticated, handleErrors(eraseEntry));
 
 export default router;

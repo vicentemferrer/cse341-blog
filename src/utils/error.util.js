@@ -1,7 +1,7 @@
-class AppError {
+class AppError extends Error {
   constructor(status, message) {
+    super(message);
     this.status = status;
-    this.message = message;
   }
 }
 
@@ -14,9 +14,7 @@ class ValidationError {
 }
 
 function handleErrors(fn) {
-  return (req, res, next) => {
-    return Promise.resolve(fn(req, res, next)).catch(next);
-  };
+  return (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
 }
 
 function detailValidationErrors(errors) {
