@@ -1,5 +1,6 @@
 # Node Modules folders
 node_modules
+coverage
 samples
 
 # Development Environment files
